@@ -187,6 +187,7 @@ a {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1;
+  white-space: nowrap;
 }
 .brand__name span {
   color: var(--neon-soft);
@@ -203,6 +204,7 @@ a {
   border-radius: 6px;
   color: var(--muted);
   text-decoration: none;
+  white-space: nowrap;
   transition: color 0.15s, background-color 0.15s;
 }
 .top__links a:hover {
@@ -266,7 +268,7 @@ a {
   margin: 0;
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(3.9rem, 11.6vw, 9.6rem);
+  font-size: clamp(3.9rem, 10.4vw, 8.1rem);
   line-height: 0.88;
   letter-spacing: 0.015em;
   text-transform: uppercase;
@@ -485,8 +487,19 @@ input[aria-invalid="true"] {
 .signup.is-done .signup__title {
   display: none;
 }
+.signup.is-done {
+  border-color: rgba(103, 232, 179, 0.5);
+  background: linear-gradient(180deg, rgba(103, 232, 179, 0.09), rgba(103, 232, 179, 0.03)), var(--panel);
+}
+.signup.is-done::before {
+  background: linear-gradient(90deg, var(--ok), rgba(103, 232, 179, 0) 70%);
+  box-shadow: 0 0 12px rgba(103, 232, 179, 0.4);
+}
 .signup.is-done .signup__status {
   margin-top: 0;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
 }
 
 /* ---------- buttons ---------- */
@@ -1039,6 +1052,17 @@ input[aria-invalid="true"] {
 }
 
 @media (max-width: 22rem) {
+  .brand__name {
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+  }
+  .brand__mark {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .top__links a {
+    padding: 0.55rem 0.5rem;
+  }
   .chain i,
   .chain b {
     display: none;
