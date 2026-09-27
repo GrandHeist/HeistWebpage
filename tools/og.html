@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Heist Engine og image</title>
+<style>
+:root{--bg:#07060a;--text:#f3eee6;--muted:#b4aec0;--neon:#ff2e7a;--neon-soft:#ff8db4;--neon-glow:rgba(255,46,122,.5);--brass:#f2c15b;
+--display:"DIN Condensed","Bahnschrift SemiCondensed","Avenir Next Condensed","Arial Narrow",Impact,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:630px;background:var(--bg);overflow:hidden}
+.card{position:relative;width:1200px;height:630px;overflow:hidden;color:var(--text);
+background:radial-gradient(700px 480px at 6% -10%,rgba(255,46,122,.22),transparent 62%),radial-gradient(600px 420px at 100% 100%,rgba(242,193,91,.14),transparent 60%),radial-gradient(800px 520px at 75% 30%,rgba(90,60,200,.14),transparent 65%),var(--bg)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse at 55% 45%,#000 15%,transparent 75%)}
+.laser{position:absolute;left:-10%;width:130%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,46,122,.9) 30%,rgba(255,46,122,.9) 70%,transparent);box-shadow:0 0 18px 2px rgba(255,46,122,.6);opacity:.35}
+.l1{top:150px;transform:rotate(-13deg)} .l2{top:470px;transform:rotate(8deg)}
+.dial{position:absolute;right:-190px;top:-5px;width:640px;height:640px;overflow:visible}
+.dial {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+.dial {
+  position: relative;
+}
+.dial__bezel {
+  fill: rgba(14, 12, 20, 0.7);
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 2;
+}
+.dial__bezel--thin {
+  fill: none;
+  stroke: rgba(255, 46, 122, 0.55);
+  stroke-width: 1.5;
+}
+.dial__bolts {
+  fill: none;
+  stroke: #3a3546;
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+.dial__turn {
+  transform-box: view-box;
+  transform-origin: 300px 300px;
+}
+.dial__ticks {
+  fill: none;
+  stroke: rgba(243, 238, 230, 0.55);
+  stroke-width: 14;
+}
+.dial__ticks--major {
+  stroke: var(--brass);
+  stroke-width: 24;
+}
+.dial__ticks--fine {
+  stroke: rgba(255, 141, 180, 0.6);
+  stroke-width: 8;
+}
+.dial__nums text {
+  fill: var(--brass);
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.dial__ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.34);
+  stroke-width: 2;
+}
+.dial__ring--dim {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+.dial__spokes line {
+  stroke: #cfc8d8;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.dial__knob {
+  fill: #15121d;
+  stroke: var(--neon);
+  stroke-width: 4;
+}
+.dial__hub {
+  fill: #0a0910;
+  stroke: var(--neon);
+  stroke-width: 3;
+}
+.dial__label {
+  fill: var(--brass);
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.dial__marker {
+  fill: var(--text);
+}
+.dial__led {
+  fill: var(--brass);
+  opacity: 0.15;
+}
+.dial__turn--outer { }
+.dial__turn--inner { }
+.dial__turn--wheel { }
+.dial__led {
+    opacity: 0.6;
+  }
+.copy{position:absolute;left:72px;top:20px;bottom:0;display:flex;flex-direction:column;justify-content:center}
+.brand{position:absolute;left:72px;top:52px;font-family:var(--display);font-weight:700;font-size:34px;letter-spacing:.14em;text-transform:uppercase}
+.brand span{color:var(--neon-soft)}
+.eyebrow{font-family:var(--mono);font-size:19px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin:0 0 22px}
+h1{margin:0;font-family:var(--display);font-weight:700;font-size:176px;line-height:.86;letter-spacing:.015em;text-transform:uppercase}
+h1 .b{display:block;color:#ffe9f2;text-shadow:0 0 5px #fff,0 0 20px var(--neon),0 0 48px var(--neon),0 0 110px var(--neon-glow)}
+.tag{margin:30px 0 0;font-family:var(--display);font-size:31px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass)}
+.url{position:absolute;left:72px;bottom:46px;font-family:var(--mono);font-size:22px;letter-spacing:.08em;color:var(--muted)}
+.veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,6,10,.85) 0,rgba(7,6,10,.35) 40%,transparent 62%)}
+</style></head>
+<body><div class="card">
+<div class="grid"></div><span class="laser l1"></span><span class="laser l2"></span>
+<svg class="dial" viewBox="0 0 600 600" focusable="false">
+        <circle class="dial__bezel" cx="300" cy="300" r="290"/>
+        <circle class="dial__bezel dial__bezel--thin" cx="300" cy="300" r="276"/>
+        <circle class="dial__bolts" cx="300" cy="300" r="262" stroke-dasharray="0 68.6"/>
+        <g class="dial__turn dial__turn--outer">
+          <circle class="dial__ticks" cx="300" cy="300" r="238" stroke-dasharray="2 12.58"/>
+          <circle class="dial__ticks dial__ticks--major" cx="300" cy="300" r="232" stroke-dasharray="3.4 141.4"/>
+          <g class="dial__nums">
+            <text x="300.0" y="104.0" transform="rotate(0 300.0 104.0)">0</text>
+            <text x="415.2" y="141.4" transform="rotate(36 415.2 141.4)">10</text>
+            <text x="486.4" y="239.4" transform="rotate(72 486.4 239.4)">20</text>
+            <text x="486.4" y="360.6" transform="rotate(108 486.4 360.6)">30</text>
+            <text x="415.2" y="458.6" transform="rotate(144 415.2 458.6)">40</text>
+            <text x="300.0" y="496.0" transform="rotate(180 300.0 496.0)">50</text>
+            <text x="184.8" y="458.6" transform="rotate(216 184.8 458.6)">60</text>
+            <text x="113.6" y="360.6" transform="rotate(252 113.6 360.6)">70</text>
+            <text x="113.6" y="239.4" transform="rotate(288 113.6 239.4)">80</text>
+            <text x="184.8" y="141.4" transform="rotate(324 184.8 141.4)">90</text>
+          </g>
+        </g>
+        <g class="dial__turn dial__turn--inner">
+          <circle class="dial__ring" cx="300" cy="300" r="150"/>
+          <circle class="dial__ticks dial__ticks--fine" cx="300" cy="300" r="140" stroke-dasharray="1.4 8.4"/>
+          <circle class="dial__ring dial__ring--dim" cx="300" cy="300" r="128"/>
+        </g>
+        <g class="dial__turn dial__turn--wheel">
+          <g class="dial__spokes">
+            <line x1="300" y1="300" x2="300" y2="196"/>
+            <line x1="300" y1="300" x2="390" y2="352"/>
+            <line x1="300" y1="300" x2="210" y2="352"/>
+          </g>
+          <circle class="dial__knob" cx="300" cy="188" r="13"/>
+          <circle class="dial__knob" cx="397" cy="356" r="13"/>
+          <circle class="dial__knob" cx="203" cy="356" r="13"/>
+        </g>
+        <circle class="dial__hub" cx="300" cy="300" r="56"/>
+        <text class="dial__label" x="300" y="309" text-anchor="middle">HD</text>
+        <path class="dial__marker" d="M300 42 l-13 -30 h26 z"/>
+        <circle class="dial__led" cx="300" cy="58" r="5"/>
+      </svg>
+<div class="veil"></div>
+<div class="brand">Heist<span> Engine</span></div>
+<div class="copy">
+<h1>Coming<span class="b">Soon</span></h1>
+<p class="tag">Every dollar in your city, on the record.</p>
+</div>
+<div class="url">heistengine.com</div>
+</div></body></html>
