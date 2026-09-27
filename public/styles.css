@@ -1,0 +1,1074 @@
+/* Heist Engine - coming soon. System fonts only, no external requests. */
+
+:root {
+  --bg: #07060a;
+  --raise: #0e0c14;
+  --panel: #100e18;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --text: #f3eee6;
+  --muted: #b4aec0;
+  --dim: #8d879a;
+  --neon: #ff2e7a;
+  --neon-soft: #ff8db4;
+  --neon-glow: rgba(255, 46, 122, 0.5);
+  --brass: #f2c15b;
+  --ok: #67e8b3;
+  --err: #ff9c8c;
+
+  --display: "DIN Condensed", "Bahnschrift SemiCondensed", "Bahnschrift", "Avenir Next Condensed", "Franklin Gothic Medium", "Arial Narrow", "Roboto Condensed", Impact, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --max: 1240px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--brass);
+  color: #15100a;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.skip:focus {
+  top: 1rem;
+}
+
+/* ---------- backdrop: grid, glows, laser lines ---------- */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 40rem at 8% -8%, rgba(255, 46, 122, 0.16), transparent 62%),
+    radial-gradient(50rem 36rem at 96% 96%, rgba(242, 193, 91, 0.1), transparent 60%),
+    radial-gradient(70rem 50rem at 70% 30%, rgba(90, 60, 200, 0.1), transparent 65%),
+    var(--bg);
+}
+
+.backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 75%);
+}
+
+.laser {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 46, 122, 0.85) 30%, rgba(255, 46, 122, 0.85) 70%, transparent);
+  box-shadow: 0 0 14px 1px rgba(255, 46, 122, 0.55);
+  opacity: 0.32;
+  transform-origin: 50% 50%;
+}
+.laser--a {
+  top: 24%;
+  transform: rotate(-14deg);
+  animation: sweep-a 14s ease-in-out infinite;
+}
+.laser--b {
+  top: 58%;
+  transform: rotate(9deg);
+  animation: sweep-b 19s ease-in-out infinite;
+}
+.laser--c {
+  top: 82%;
+  transform: rotate(-5deg);
+  opacity: 0.2;
+  animation: sweep-a 23s ease-in-out infinite reverse;
+}
+
+@keyframes sweep-a {
+  0%, 100% { transform: translateY(0) rotate(-14deg); opacity: 0.16; }
+  50% { transform: translateY(6vh) rotate(-11deg); opacity: 0.42; }
+}
+@keyframes sweep-b {
+  0%, 100% { transform: translateY(0) rotate(9deg); opacity: 0.4; }
+  50% { transform: translateY(-7vh) rotate(6deg); opacity: 0.14; }
+}
+
+/* ---------- header ---------- */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+.brand__mark {
+  width: 1.9rem;
+  height: 1.9rem;
+  stroke: var(--neon);
+  filter: drop-shadow(0 0 6px var(--neon-glow));
+}
+.brand__mark circle:nth-child(2) {
+  stroke: var(--brass);
+}
+.brand__mark path {
+  stroke: var(--text);
+}
+.brand__name {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brand__name span {
+  color: var(--neon-soft);
+}
+
+.top__links {
+  display: flex;
+  gap: 0.25rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+.top__links a {
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s, background-color 0.15s;
+}
+.top__links a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(1rem, 4vh, 3rem) var(--gutter) clamp(2.5rem, 6vw, 5rem);
+}
+
+.hero__copy {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.6rem;
+  margin: 0 0 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.eyebrow__sep {
+  color: var(--dim);
+}
+.eyebrow__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow a {
+  text-decoration: none;
+}
+.pulse {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--brass);
+  box-shadow: 0 0 0 0 rgba(242, 193, 91, 0.6);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(242, 193, 91, 0.55); }
+  70%, 100% { box-shadow: 0 0 0 0.7rem rgba(242, 193, 91, 0); }
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3.9rem, 11.6vw, 9.6rem);
+  line-height: 0.88;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.headline__a {
+  color: var(--text);
+}
+.headline__b {
+  color: #ffe9f2;
+  text-shadow:
+    0 0 0.03em #fff,
+    0 0 0.1em var(--neon),
+    0 0 0.26em var(--neon),
+    0 0 0.6em var(--neon-glow);
+}
+.flick {
+  animation: flick 9s linear infinite;
+}
+@keyframes flick {
+  0%, 38%, 41%, 43%, 46%, 71%, 73%, 100% { opacity: 1; }
+  39%, 42% { opacity: 0.55; }
+  44% { opacity: 0.8; }
+  72% { opacity: 0.6; }
+}
+
+.tagline {
+  margin: 0.15rem 0 0;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.lede {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  color: var(--muted);
+}
+
+/* ---------- sign-up ---------- */
+
+.signup {
+  position: relative;
+  max-width: 38rem;
+  margin-top: 1.75rem;
+  padding: 1.35rem 1.35rem 1.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--panel);
+  box-shadow: 0 1.5rem 3rem -1.5rem rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.signup::before {
+  content: "";
+  position: absolute;
+  left: 1.35rem;
+  right: 1.35rem;
+  top: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon), rgba(255, 46, 122, 0) 70%);
+  box-shadow: 0 0 12px var(--neon-glow);
+}
+
+.signup__title {
+  margin: 0 0 1rem;
+  font-family: var(--display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.signup__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 0.9rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.field--email,
+.signup__actions {
+  grid-column: 1 / -1;
+}
+.field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.opt {
+  font-weight: 400;
+  color: var(--dim);
+}
+
+input[type="email"],
+input[type="text"],
+select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.85rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.4rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 55%, calc(100% - 0.8rem) 55%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+select option {
+  background: #14121c;
+  color: var(--text);
+}
+input::placeholder {
+  color: #8a8496;
+}
+input:hover,
+select:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 1px;
+  border-color: var(--brass);
+}
+input[aria-invalid="true"] {
+  border-color: var(--err);
+}
+
+.hp {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.signup__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 0.15rem;
+}
+.fineprint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--dim);
+}
+.fineprint a {
+  color: var(--muted);
+}
+.fineprint a:hover {
+  color: var(--text);
+}
+
+.signup__status:empty {
+  display: none;
+}
+.signup__status {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  border: 1px solid var(--line-strong);
+}
+.signup__status:focus {
+  outline: none;
+}
+.signup__status:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+.signup__status p {
+  margin: 0;
+}
+.signup__status--ok {
+  border-color: rgba(103, 232, 179, 0.5);
+  background: rgba(103, 232, 179, 0.08);
+}
+.signup__status--ok strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ok);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+.signup__status--error {
+  border-color: rgba(255, 156, 140, 0.55);
+  background: rgba(255, 120, 100, 0.08);
+  color: var(--err);
+}
+.signup__form[hidden] {
+  display: none;
+}
+.signup.is-done .signup__title {
+  display: none;
+}
+.signup.is-done .signup__status {
+  margin-top: 0;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  min-height: 3rem;
+  padding: 0.7rem 1.3rem;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.15s, background-color 0.15s, border-color 0.15s;
+}
+.btn--primary {
+  flex: none;
+  color: #1a0710;
+  background: var(--neon);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 0.6rem 1.6rem -0.6rem var(--neon-glow);
+}
+.btn--primary:hover:not(:disabled) {
+  background: #ff4d8f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25) inset, 0 0.8rem 2rem -0.5rem var(--neon-glow);
+  transform: translateY(-1px);
+}
+.btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn--primary:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+.btn--ghost {
+  color: var(--text);
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+}
+.btn--ghost:hover {
+  border-color: var(--neon-soft);
+  background: rgba(255, 46, 122, 0.08);
+}
+
+/* ---------- art: vault dial + ledger ---------- */
+
+.hero__art {
+  position: relative;
+  min-width: 0;
+}
+
+.dial {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+.hero__art::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 46, 122, 0.16), transparent);
+}
+.dial {
+  position: relative;
+}
+.dial__bezel {
+  fill: rgba(14, 12, 20, 0.7);
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 2;
+}
+.dial__bezel--thin {
+  fill: none;
+  stroke: rgba(255, 46, 122, 0.55);
+  stroke-width: 1.5;
+}
+.dial__bolts {
+  fill: none;
+  stroke: #3a3546;
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+.dial__turn {
+  transform-box: view-box;
+  transform-origin: 300px 300px;
+}
+.dial__ticks {
+  fill: none;
+  stroke: rgba(243, 238, 230, 0.55);
+  stroke-width: 14;
+}
+.dial__ticks--major {
+  stroke: var(--brass);
+  stroke-width: 24;
+}
+.dial__ticks--fine {
+  stroke: rgba(255, 141, 180, 0.6);
+  stroke-width: 8;
+}
+.dial__nums text {
+  fill: var(--brass);
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.dial__ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.34);
+  stroke-width: 2;
+}
+.dial__ring--dim {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+.dial__spokes line {
+  stroke: #cfc8d8;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.dial__knob {
+  fill: #15121d;
+  stroke: var(--neon);
+  stroke-width: 4;
+}
+.dial__hub {
+  fill: #0a0910;
+  stroke: var(--neon);
+  stroke-width: 3;
+}
+.dial__label {
+  fill: var(--brass);
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.dial__marker {
+  fill: var(--text);
+}
+.dial__led {
+  fill: var(--brass);
+  opacity: 0.15;
+  animation: led 18s linear infinite;
+}
+
+.dial__turn--outer { animation: combo-a 18s cubic-bezier(0.6, 0, 0.3, 1) infinite; }
+.dial__turn--inner { animation: combo-b 18s cubic-bezier(0.6, 0, 0.3, 1) infinite; }
+.dial__turn--wheel { animation: wheel 90s linear infinite; }
+
+/* Turn, stop, turn back, stop, turn, stop: like working a combination. */
+@keyframes combo-a {
+  0%, 6% { transform: rotate(0deg); }
+  30%, 38% { transform: rotate(132deg); }
+  58%, 66% { transform: rotate(48deg); }
+  90%, 100% { transform: rotate(360deg); }
+}
+@keyframes combo-b {
+  0%, 6% { transform: rotate(0deg); }
+  30%, 38% { transform: rotate(-96deg); }
+  58%, 66% { transform: rotate(40deg); }
+  90%, 100% { transform: rotate(-360deg); }
+}
+@keyframes wheel {
+  to { transform: rotate(360deg); }
+}
+@keyframes led {
+  0%, 30%, 32%, 58%, 60%, 90%, 92%, 100% { opacity: 0.15; }
+  31%, 59%, 91% { opacity: 1; }
+}
+
+.ledger {
+  position: relative;
+  margin: -3.2rem 0 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: rgba(10, 9, 15, 0.94);
+  box-shadow: 0 1.5rem 3rem -1rem rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  font-family: var(--mono);
+}
+.ledger__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.ledger__bar-sep {
+  color: #5d5769;
+}
+.ledger__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 8px var(--neon);
+  animation: blink 1.6s steps(2, jump-none) infinite;
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  100% { opacity: 0.25; }
+}
+
+.ledger__view {
+  position: relative;
+  height: 12.5rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+}
+.ledger__track {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: tick 16s steps(8, jump-end) infinite;
+}
+@keyframes tick {
+  to { transform: translateY(-50%); }
+}
+.ledger__track li {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr) auto;
+  grid-template-areas: "seq intent chain" "seq path chain";
+  column-gap: 0.7rem;
+  align-content: center;
+  height: 2.5rem;
+  padding: 0 0.9rem;
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+.seq {
+  grid-area: seq;
+  align-self: center;
+  color: var(--dim);
+}
+.intent {
+  grid-area: intent;
+  color: var(--text);
+  font-weight: 700;
+}
+.path {
+  grid-area: path;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chain {
+  grid-area: chain;
+  align-self: center;
+  color: var(--brass);
+  white-space: nowrap;
+}
+.chain i {
+  font-style: normal;
+  color: var(--dim);
+}
+.chain b {
+  color: var(--neon-soft);
+}
+.ledger__cap {
+  margin: 0;
+  padding: 0.55rem 0.9rem 0.7rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--dim);
+}
+
+/* ---------- three points ---------- */
+
+.points {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.points__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+.point {
+  position: relative;
+  padding: 1.6rem 1.75rem 1.9rem 0;
+}
+.point + .point {
+  padding-left: 1.75rem;
+  border-left: 1px solid var(--line);
+}
+.point__n {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--neon-soft);
+}
+.point__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+.point p {
+  margin: 0;
+  max-width: 26rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* ---------- follow ---------- */
+
+.follow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  max-width: var(--max);
+  margin: clamp(2rem, 5vw, 4rem) auto 0;
+  padding: 0 var(--gutter);
+}
+.follow__title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.follow__text {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+.follow__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+/* ---------- footer ---------- */
+
+.foot {
+  width: calc(min(100%, var(--max)) - 2 * var(--gutter));
+  margin: clamp(2.5rem, 6vw, 4.5rem) auto 0;
+  padding: 1.5rem 0 2.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+.foot p {
+  margin: 0;
+}
+.foot__disclaimer {
+  max-width: 44rem;
+  line-height: 1.55;
+}
+.foot__links {
+  display: flex;
+  gap: 1.1rem;
+  font-family: var(--mono);
+}
+.foot a {
+  color: var(--muted);
+}
+.foot a:hover {
+  color: var(--text);
+}
+
+/* ---------- plain notice pages (form result, 404, privacy) ---------- */
+
+.page-notice {
+  display: grid;
+  place-items: center;
+  padding: 2rem var(--gutter);
+  background:
+    radial-gradient(50rem 30rem at 10% -10%, rgba(255, 46, 122, 0.16), transparent 62%),
+    var(--bg);
+}
+.notice {
+  width: min(100%, 34rem);
+  padding: 2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: var(--panel);
+}
+.notice h1 {
+  margin: 0 0 0.75rem;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.notice--ok h1 {
+  color: var(--ok);
+}
+.notice--error h1 {
+  color: var(--err);
+}
+.notice__text {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+.notice .eyebrow {
+  margin-bottom: 0.9rem;
+}
+
+.doc {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem var(--gutter) 4rem;
+}
+.doc h1 {
+  margin: 1rem 0 0.5rem;
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.doc h2 {
+  margin: 2rem 0 0.5rem;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.doc p,
+.doc li {
+  color: var(--muted);
+}
+.doc a {
+  color: var(--neon-soft);
+}
+.doc .updated {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 62rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .signup,
+  .lede {
+    max-width: none;
+  }
+  .hero__art {
+    max-width: 30rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .headline {
+    font-size: clamp(3.6rem, 16vw, 9rem);
+  }
+}
+
+@media (max-width: 54rem) {
+  .points__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .point,
+  .point + .point {
+    padding: 1.4rem 0 1.5rem;
+    border-left: 0;
+  }
+  .point + .point {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 34rem) {
+  .signup {
+    padding: 1.1rem 1rem 1rem;
+  }
+  .signup__form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .signup__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+  .btn--primary {
+    width: 100%;
+  }
+  .eyebrow__sep {
+    display: none;
+  }
+  .eyebrow__what {
+    flex-basis: 100%;
+  }
+  .tagline {
+    font-size: 1.3rem;
+  }
+  .headline {
+    white-space: normal;
+    font-size: clamp(3.4rem, 21vw, 6rem);
+    line-height: 0.9;
+  }
+  .headline__a,
+  .headline__b {
+    display: block;
+  }
+  .brand__name {
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+  }
+  .ledger__track li {
+    grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  }
+  .follow__links,
+  .follow__links .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 22rem) {
+  .chain i,
+  .chain b {
+    display: none;
+  }
+}
+
+/* ---------- motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .laser {
+    opacity: 0.2;
+  }
+  .dial__led {
+    opacity: 0.6;
+  }
+}
+
+@media (forced-colors: active) {
+  .btn--primary {
+    border-color: ButtonText;
+  }
+  .signup,
+  .ledger,
+  .notice {
+    border-color: CanvasText;
+  }
+}
