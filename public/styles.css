@@ -9,9 +9,9 @@
   --text: #f3eee6;
   --muted: #b4aec0;
   --dim: #8d879a;
-  --neon: #ff2e7a;
-  --neon-soft: #ff8db4;
-  --neon-glow: rgba(255, 46, 122, 0.5);
+  --neon: #2bffa0;
+  --neon-soft: #a4ffd6;
+  --neon-glow: rgba(43, 255, 160, 0.45);
   --brass: #f2c15b;
   --ok: #67e8b3;
   --err: #ff9c8c;
@@ -96,7 +96,7 @@ a {
   z-index: -1;
   overflow: hidden;
   background:
-    radial-gradient(60rem 40rem at 8% -8%, rgba(255, 46, 122, 0.16), transparent 62%),
+    radial-gradient(60rem 40rem at 8% -8%, rgba(43, 255, 160, 0.16), transparent 62%),
     radial-gradient(50rem 36rem at 96% 96%, rgba(242, 193, 91, 0.1), transparent 60%),
     radial-gradient(70rem 50rem at 70% 30%, rgba(90, 60, 200, 0.1), transparent 65%),
     var(--bg);
@@ -119,8 +119,8 @@ a {
   left: -20%;
   width: 140%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 46, 122, 0.85) 30%, rgba(255, 46, 122, 0.85) 70%, transparent);
-  box-shadow: 0 0 14px 1px rgba(255, 46, 122, 0.55);
+  background: linear-gradient(90deg, transparent, rgba(43, 255, 160, 0.85) 30%, rgba(43, 255, 160, 0.85) 70%, transparent);
+  box-shadow: 0 0 14px 1px rgba(43, 255, 160, 0.55);
   opacity: 0.32;
   transform-origin: 50% 50%;
 }
@@ -330,7 +330,7 @@ a {
   right: 1.35rem;
   top: -1px;
   height: 2px;
-  background: linear-gradient(90deg, var(--neon), rgba(255, 46, 122, 0) 70%);
+  background: linear-gradient(90deg, var(--neon), rgba(43, 255, 160, 0) 70%);
   box-shadow: 0 0 12px var(--neon-glow);
 }
 
@@ -522,12 +522,12 @@ input[aria-invalid="true"] {
 }
 .btn--primary {
   flex: none;
-  color: #1a0710;
+  color: #07170f;
   background: var(--neon);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 0.6rem 1.6rem -0.6rem var(--neon-glow);
 }
 .btn--primary:hover:not(:disabled) {
-  background: #ff4d8f;
+  background: #6dffbf;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25) inset, 0 0.8rem 2rem -0.5rem var(--neon-glow);
   transform: translateY(-1px);
 }
@@ -545,7 +545,7 @@ input[aria-invalid="true"] {
 }
 .btn--ghost:hover {
   border-color: var(--neon-soft);
-  background: rgba(255, 46, 122, 0.08);
+  background: rgba(43, 255, 160, 0.08);
 }
 
 /* ---------- art: vault dial + ledger ---------- */
@@ -570,7 +570,7 @@ input[aria-invalid="true"] {
   top: 0;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(255, 46, 122, 0.16), transparent);
+  background: radial-gradient(closest-side, rgba(43, 255, 160, 0.16), transparent);
 }
 .dial {
   position: relative;
@@ -582,7 +582,7 @@ input[aria-invalid="true"] {
 }
 .dial__bezel--thin {
   fill: none;
-  stroke: rgba(255, 46, 122, 0.55);
+  stroke: rgba(43, 255, 160, 0.55);
   stroke-width: 1.5;
 }
 .dial__bolts {
@@ -905,7 +905,7 @@ input[aria-invalid="true"] {
   place-items: center;
   padding: 2rem var(--gutter);
   background:
-    radial-gradient(50rem 30rem at 10% -10%, rgba(255, 46, 122, 0.16), transparent 62%),
+    radial-gradient(50rem 30rem at 10% -10%, rgba(43, 255, 160, 0.16), transparent 62%),
     var(--bg);
 }
 .notice {
