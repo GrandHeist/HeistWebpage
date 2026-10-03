@@ -111,7 +111,9 @@ test('every form control has a label', () => {
 
 test('the copy avoids money, token and date language', () => {
   const text = html.replace(/<[^>]+>/g, ' ').toLowerCase();
-  for (const word of ['crypto', 'token', 'blockchain', 'invest', 'earn', 'profit', 'price', 'airdrop', 'presale', 'roi', 'apy', 'nft', 'solana', 'bnb']) {
+  // 'solana' is allowed as of the "Why Solana" nav link -- a deliberate, informed call, not an
+  // oversight. Everything else here still isn't welcome on this page.
+  for (const word of ['crypto', 'token', 'blockchain', 'invest', 'earn', 'profit', 'price', 'airdrop', 'presale', 'roi', 'apy', 'nft', 'bnb']) {
     assert.ok(!new RegExp(`\\b${word}\\b`).test(text), word);
   }
   assert.doesNotMatch(text, /\b(20\d\d|q[1-4]|january|february|march|april|june|july|august|september|october|november|december)\b/);
